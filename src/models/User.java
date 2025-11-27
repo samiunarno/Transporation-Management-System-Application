@@ -66,4 +66,14 @@ public class User implements Serializable{
         return String.format("User {username='%s', role = '%s', active= '%s' , failedAttempts = %d}", username,role,isActive,failedLoginAttempts);
 
     }
+
+    public Object getPassword() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPassword'");
+    }
+
+    public void incrementFailedAttempts() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'incrementFailedAttempts'");
+    }
 }
