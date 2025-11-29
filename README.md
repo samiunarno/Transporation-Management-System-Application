@@ -1,179 +1,125 @@
-To Run Directly 
-cd src
-chmod +x runMac.command/runLinux.sh/runWindows.bat
-then
-./runMac.command or ./runLinux.sh  or  ./runWindows.bat
 
-Program Will Run Automatically 
+# ✈️🚢 Transportation Management System 🚢✈️
 
-🛠️ Installation
-Prerequisites
-Java JDK 8 or higher
+<p align="center">
+  <img src="https://img.shields.io/badge/Java-JDK%208%2B-blue?style=for-the-badge&logo=java" alt="Java Version">
+  <img src="https://img.shields.io/badge/Platform-CLI-lightgrey?style=for-the-badge&logo=powershell" alt="Platform">
+  <img src="https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge" alt="Status">
+</p>
 
-Any Java-compatible IDE (Eclipse, IntelliJ, VS Code)
+<p align="center">
+  A robust, secure, and feature-rich command-line application for managing air and sea transportation, bookings, and users with a sophisticated role-based access system.
+</p>
 
-Basic knowledge of command line operations
+---
 
-Step-by-Step Installation Guide
-1. Create Project Structure
-bash
-# Create main project directory
-mkdir TransportationManagementSystem
-cd TransportationManagementSystem
+## ✨ Key Features
 
-# Create source folder structure
-mkdir -p src/models src/services
+### 🔐 Authentication & Advanced Security
+-   **Multi-role Login System**: Differentiated access for `Admin`, `Operator`, and `Passenger` roles.
+-   **Secure User Registration**: New users can register with a specific role.
+-   **Strong Password Policy**: Enforces robust password requirements (length, case, numbers, special characters).
+-   **Account Lock Protection**: Automatically locks an account after 3 consecutive failed login attempts.
+-   **Admin Unlock System**: Admins can unlock accounts using a unique, auto-generated secure key.
+-   **Role-based Permissions**: Granular control over what each user role can see and do.
 
-# Navigate to source directory
-cd src
-2. File Structure Setup
-Create the following folder structure and add corresponding Java files:
+### 🚢 Comprehensive Transport Management
+-   **Multiple Transport Types**: Full support for both **Air** and **Sea** transport logistics.
+-   **Dynamic Fleet Management**: Admins can add or remove transport options on-the-fly.
+-   **Real-time Availability**: Live status tracking for all transports.
+-   **Capacity & Speed Configuration**: Easily set and manage passenger capacity and speed for each transport.
+-   **Easy Filtering**: View and categorize transports by type (`AIR`/`SEA`).
 
-text
+### 📅 Advanced Booking System
+-   **Effortless Booking**: A streamlined, console-based process for passengers to book transports.
+-   **Complete Booking History**: Access a comprehensive log of all bookings in the system.
+-   **Flexible Cancellation**: Users can cancel their confirmed bookings.
+-   **Live Status Tracking**: Monitor booking status (`CONFIRMED`/`CANCELLED`/`COMPLETED`).
+-   **Automatic Availability Sync**: Transport availability is instantly updated after a booking or cancellation.
+
+### 🎯 Role-Based Dashboards & User Management
+-   **Admin Dashboard (`👨‍💼`)**: Full system oversight, user management, and transport configuration.
+-   **Operator Dashboard (`👷`)**: Manage transport operations, view bookings, and check transport status.
+-   **Passenger Dashboard (`👤`)**: Manage personal bookings, view transport availability, and cancel trips.
+-   **Central User Management**: Admins can view all users, their roles, and account status (active/locked).
+
+### 📊 System Monitoring & Reporting
+-   **Real-time Statistics**: Get a live snapshot of system metrics.
+-   **Transport Analytics**: View transport counts categorized by type.
+-   **Booking Analytics**: Track the ratio of confirmed vs. cancelled bookings.
+-   **User Activity Reports**: Monitor user engagement and system-wide activities.
+
+---
+
+## 📂 Project Structure
+```
 TransportationManagementSystem/
-├── src/
-│   ├── models/
-│   │   ├── User.java
-│   │   ├── Transport.java
-│   │   ├── AirTransport.java
-│   │   ├── SeaTransport.java
-│   │   ├── Booking.java
-│   │   └── UserLock.java
-│   ├── services/
-│   │   ├── AuthService.java
-│   │   ├── TransportService.java
-│   │   ├── BookingService.java
-│   │   └── UserLockService.java
-│   └── Main.java
-3. Compile the Project
-bash
-# From src directory, compile all Java files
-javac -d . *.java models/*.java services/*.java
-4. Run the Application
-bash
-# Run the main class
-java Main
-5. Verify Installation
-If successful, you should see:
+└── src/
+    ├── models/
+    │   ├── User.java
+    │   ├── Transport.java
+    │   ├── AirTransport.java
+    │   ├── SeaTransport.java
+    │   ├── Booking.java
+    │   └── UserLock.java
+    ├── services/
+    │   ├── AuthService.java
+    │   ├── TransportService.java
+    │   ├── BookingService.java
+    │   └── UserLockService.java
+    └── Main.java
+```
 
-text
+---
+
+## 🛠️ Installation & Setup
+
+### Prerequisites
+-   Java JDK 8 or higher.
+-   A Java-compatible IDE (e.g., Eclipse, IntelliJ IDEA, VS Code).
+-   Basic knowledge of command-line operations.
+
+### Step-by-Step Guide
+1.  **Create Project Directory:**
+    ```bash
+    mkdir TransportationManagementSystem
+    cd TransportationManagementSystem
+    ```
+2.  **Create Source Structure:**
+    ```bash
+    mkdir -p src/models src/services
+    ```
+3.  **Add Java Files:** Place all `.java` files into their corresponding folders as shown in the project structure.
+
+4.  **Compile the Project:** Navigate to the `src` directory and run:
+    ```bash
+    javac -d . *.java models/*.java services/*.java
+    ```
+
+### Quick Installation (One Command)
+For a rapid setup, navigate to your desired projects folder and run:
+```bash
+mkdir -p TransportationManagementSystem/src/{models,services} && cd TransportationManagementSystem/src
+# Add all your Java files to the correct folders, then run:
+# javac -d . *.java models/*.java services/*.java && java Main
+```
+
+---
+
+## 🚀 Running the Application
+
+After successful compilation, run the application from within the **`src`** directory:
+```bash
+java Main
+```
+If successful, you will see the welcome message:
+```
 🚀 Starting Transportation Management System...
 🚀 Welcome to Transportation Management System 🚀
-Quick Installation (One Command)
-bash
-mkdir -p TransportationManagementSystem/src/{models,services} && cd TransportationManagementSystem/src
-# Then add all Java files and run: javac -d . *.java models/*.java services/*.java && java Main
-✨ Features
-🔐 Authentication & Security System
-Multi-role Login System - Admin, Operator, and Passenger roles
+```
 
-User Registration - New user account creation with role assignment
+---
 
-Secure Session Management - Automatic logout and session handling
+## ☕ Contact
 
-Account Lock Protection - Automatic lock after 3 failed login attempts
-
-Admin Unlock System - Special key-based account unlocking
-
-Role-based Permissions - Different access levels for different user types
-
-🚢 Transport Management
-Multiple Transport Types - Support for Air and Sea transports
-
-Dynamic Transport Addition - Add new transports with unique IDs
-
-Transport Removal - Delete transports from the system
-
-Real-time Availability - Live tracking of transport availability status
-
-Capacity Management - Set and manage passenger capacity for each transport
-
-Speed Configuration - Configure speed settings for different transport types
-
-Transport Categorization - Filter and view transports by type (AIR/SEA)
-
-📅 Advanced Booking System
-Easy Booking Process - Simple transport booking for passengers
-
-Booking History - Complete history of all bookings
-
-Booking Cancellation - Cancel confirmed bookings
-
-Status Tracking - Track booking status (CONFIRMED/CANCELLED/COMPLETED)
-
-Personal Booking Management - Users can view and manage their own bookings
-
-Automatic Availability Update - Transport availability automatically updates on booking
-
-👥 Comprehensive User Management
-User Role Management - Admin can view all users and their roles
-
-Failed Login Tracking - Monitor and track failed login attempts
-
-Account Status Monitoring - View active and locked accounts
-
-User Activity Logging - Track user activities within the system
-
-Profile Management - Users can manage their own profiles
-
-🎯 Role-Based Dashboard System
-👨‍💼 Admin Dashboard Features
-Full system access and control
-
-View all transports and bookings
-
-Add and remove transports
-
-Manage user accounts and roles
-
-Unlock locked user accounts
-
-View comprehensive system statistics
-
-Monitor system health and usage
-
-👷 Operator Dashboard Features
-Transport management capabilities
-
-View available transports
-
-Manage booking operations
-
-Check transport status and availability
-
-Limited access to user management
-
-👤 Passenger Dashboard Features
-Personal booking management
-
-View available transports
-
-Book available transports
-
-View personal booking history
-
-Cancel own bookings
-
-Limited to personal activities
-
-🔒 Security & Protection Features
-Automatic Account Lock - System locks accounts after 3 failed attempts
-
-Unique Unlock Keys - Auto-generated secure unlock keys
-
-Force Unlock Capability - Admin can force unlock any account
-
-Input Validation - Basic validation for user inputs
-
-Error Handling - Comprehensive error handling throughout the system
-
-📊 System Monitoring & Reporting
-Real-time Statistics - Live system statistics and metrics
-
-Transport Analytics - View transport counts by type
-
-Booking Analytics - Track confirmed vs cancelled bookings
-
-User Activity Reports - Monitor user engagement and activities
-
-System Health Monitoring - Track overall system performance
+Feel free to have a coffee, I mean **contact me**! If you have any questions, suggestions, or feedback, please don't hesitate to reach out.
