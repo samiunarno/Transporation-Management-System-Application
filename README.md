@@ -1,3 +1,11 @@
+To Run Directly If you have installed Java
+cd src
+chmod +x runMac.command/runLinux.sh/runWindows.bat
+then
+./runMac.command or ./runLinux.sh  or  ./runWindows.bat
+
+Program Will Run Automatically 
+
 🛠️ Installation
 Prerequisites
 Java JDK 8 or higher
