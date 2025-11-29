@@ -1,4 +1,4 @@
-To Run Directly If you have installed Java
+To Run Directly 
 cd src
 chmod +x runMac.command/runLinux.sh/runWindows.bat
 then
