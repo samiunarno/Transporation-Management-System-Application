@@ -2,7 +2,7 @@ import services.*;
 import models.*;
 import java.util.*;
 
-public class main {
+public class Main {
     public static void main(String[] args) {
         System.out.println("Starting Transportation Management System...");
         
