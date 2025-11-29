@@ -29,13 +29,13 @@ echo -e "${GREEN}Java found! $(java -version 2>&1 | head -n 1)${NC}"
 # Check project structure
 echo -e "${YELLOW}Checking project structure...${NC}"
 
-if [ ! -d "models" ]; then
+if [ ! -d "src/models" ]; then
     echo -e "${RED}ERROR: 'models' folder not found!${NC}"
     echo "Please ensure you're in the correct directory"
     exit 1
 fi
 
-if [ ! -d "services" ]; then
+if [ ! -d "src/services" ]; then
     echo -e "${RED}ERROR: 'services' folder not found!${NC}"
     echo "Please ensure you're in the correct directory"
     exit 1
@@ -55,7 +55,7 @@ javac -d . Main.java models/*.java services/*.java
 
 if [ $? -ne 0 ]; then
     echo -e "${RED}"
-    echo "❌ COMPILATION FAILED!"
+    echo "COMPILATION FAILED!"
     echo "Please check the errors above and fix your code"
     echo -e "${NC}"
     exit 1

@@ -41,23 +41,23 @@ echo -e "${GREEN}Java found! Version: $java_version${NC}"
 echo -e "${YELLOW}Checking project structure...${NC}"
 
 if [ ! -d "src/models" ]; then
-    echo -e "${RED}ERROR: 'models' folder not found!${NC}"
+    echo -e "${RED}ERROR: 'src/models' folder not found!${NC}"
     echo "Please ensure all Java files are in correct directories:"
-    echo "📁 models/ - All model classes"
-    echo "📁 services/ - All service classes"
-    echo "📄 Main.java - Main application file"
+    echo "📁 src/models/ - All model classes"
+    echo "📁 src/services/ - All service classes"
+    echo "📄 src/Main.java - Main application file"
     exit 1
 fi
 
 if [ ! -d "src/services" ]; then
-    echo -e "${RED}ERROR: 'services' folder not found!${NC}"
+    echo -e "${RED}ERROR: 'src/services' folder not found!${NC}"
     echo "Please ensure all Java files are in correct directories"
     exit 1
 fi
 
 if [ ! -f "src/Main.java" ]; then
-    echo -e "${RED}ERROR: Main.java not found!${NC}"
-    echo "Please ensure Main.java is in the current directory"
+    echo -e "${RED}ERROR: src/Main.java not found!${NC}"
+    echo "Please ensure Main.java is in src directory"
     exit 1
 fi
 
@@ -67,11 +67,11 @@ echo -e "${GREEN}Project structure verified!${NC}"
 echo -e "${YELLOW}Cleaning previous compilation...${NC}"
 find . -name "*.class" -type f -delete 2>/dev/null
 
-# Compile Java files
+# Compile Java files - FIXED THIS LINE
 echo -e "${YELLOW}Compiling Java files...${NC}"
 echo "==============================================="
 
-javac -d . Main.java models/*.java services/*.java
+javac -d . src/Main.java src/models/*.java src/services/*.java
 
 if [ $? -ne 0 ]; then
     echo -e "${RED}"
@@ -84,7 +84,7 @@ if [ $? -ne 0 ]; then
     echo
     if [[ $REPLY =~ ^[Yy]$ ]]; then
         # Capture compilation errors and open in TextEdit
-        javac -d . Main.java models/*.java services/*.java 2>&1 | tee /tmp/compile_errors.txt
+        javac -d . src/Main.java src/models/*.java src/services/*.java 2>&1 | tee /tmp/compile_errors.txt
         open -a TextEdit /tmp/compile_errors.txt
     fi
     exit 1
@@ -101,8 +101,8 @@ echo
 
 sleep 2
 
-# Run the application
-java Main
+# Run the application - FIXED THIS LINE
+java -cp . src.Main
 
 echo
 echo "==============================================="
