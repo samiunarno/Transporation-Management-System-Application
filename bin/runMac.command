@@ -37,41 +37,58 @@ fi
 java_version=$(java -version 2>&1 | head -n 1 | awk -F '"' '{print $2}')
 echo -e "${GREEN}Java found! Version: $java_version${NC}"
 
-# Check project structure
+# Check project structure - FIXED: Check for actual folders, not src/ folders
 echo -e "${YELLOW}Checking project structure...${NC}"
 
-if [ ! -d "src/models" ]; then
-    echo -e "${RED}ERROR: 'src/models' folder not found!${NC}"
-    echo "Please ensure all Java files are in correct directories:"
-    echo "📁 src/models/ - All model classes"
-    echo "📁 src/services/ - All service classes"
-    echo "📄 src/Main.java - Main application file"
+if [ ! -d "models" ]; then
+    echo -e "${RED}ERROR: 'models' folder not found!${NC}"
+    echo "Current directory: $(pwd)"
+    echo "Available folders:"
+    ls -la
     exit 1
 fi
 
-if [ ! -d "src/services" ]; then
-    echo -e "${RED}ERROR: 'src/services' folder not found!${NC}"
-    echo "Please ensure all Java files are in correct directories"
+if [ ! -d "services" ]; then
+    echo -e "${RED}ERROR: 'services' folder not found!${NC}"
+    echo "Current directory: $(pwd)"
+    echo "Available folders:"
+    ls -la
     exit 1
 fi
 
-if [ ! -f "src/Main.java" ]; then
-    echo -e "${RED}ERROR: src/Main.java not found!${NC}"
-    echo "Please ensure Main.java is in src directory"
+if [ ! -f "Main.java" ]; then
+    echo -e "${RED}ERROR: Main.java not found!${NC}"
+    echo "Current directory: $(pwd)"
+    echo "Available files:"
+    ls -la *.java 2>/dev/null || echo "No Java files found"
     exit 1
 fi
 
 echo -e "${GREEN}Project structure verified!${NC}"
 
+# Check if files exist in models and services folders
+echo -e "${YELLOW}Checking Java files in folders...${NC}"
+if [ $(ls models/*.java 2>/dev/null | wc -l) -eq 0 ]; then
+    echo -e "${RED}ERROR: No Java files found in models folder!${NC}"
+    exit 1
+fi
+
+if [ $(ls services/*.java 2>/dev/null | wc -l) -eq 0 ]; then
+    echo -e "${RED}ERROR: No Java files found in services folder!${NC}"
+    exit 1
+fi
+
+echo -e "${GREEN}All Java files found!${NC}"
+
 # Clean previous compilation
 echo -e "${YELLOW}Cleaning previous compilation...${NC}"
 find . -name "*.class" -type f -delete 2>/dev/null
 
-# Compile Java files - FIXED THIS LINE
+# Compile Java files - FIXED: Correct compile command
 echo -e "${YELLOW}Compiling Java files...${NC}"
 echo "==============================================="
 
-javac -d . src/Main.java src/models/*.java src/services/*.java
+javac -d . Main.java models/*.java services/*.java
 
 if [ $? -ne 0 ]; then
     echo -e "${RED}"
@@ -79,12 +96,12 @@ if [ $? -ne 0 ]; then
     echo "Please check the errors above and fix your code"
     echo -e "${NC}"
     
-    # Offer to open in TextEdit for debugging
+    # Offer to open in TextEdit for debugging - FIXED: Use correct file paths
     read -p "Open error details in TextEdit? (y/n): " -n 1 -r
     echo
     if [[ $REPLY =~ ^[Yy]$ ]]; then
         # Capture compilation errors and open in TextEdit
-        javac -d . src/Main.java src/models/*.java src/services/*.java 2>&1 | tee /tmp/compile_errors.txt
+        javac -d . Main.java models/*.java services/*.java 2>&1 | tee /tmp/compile_errors.txt
         open -a TextEdit /tmp/compile_errors.txt
     fi
     exit 1
@@ -101,8 +118,9 @@ echo
 
 sleep 2
 
-# Run the application - FIXED THIS LINE
-java -cp . src.Main
+# Run the application - FIXED: Run Main directly, not src.Main
+echo -e "${YELLOW}Starting application...${NC}"
+java Main
 
 echo
 echo "==============================================="
