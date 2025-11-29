@@ -1,311 +1,171 @@
-A comprehensive Java-based Transportation Management System that provides role-based access control for managing air and sea transports, bookings, and user accounts with advanced security features.
-
-https://img.shields.io/badge/Java-17-blue
-https://img.shields.io/badge/OOP-Design-orange
-https://img.shields.io/badge/License-MIT-green
-
-📋 Table of Contents
-Features
-
-System Architecture
-
-Installation
-
-Usage
-
-User Roles
-
-Class Diagram
-
-API Documentation
-
-Contributing
-
-License
-
-✨ Features
-🔐 Authentication & Security
-Role-based Access Control (Admin, Operator, Passenger)
-
-User Registration & Login system
-
-Account Locking after 3 failed login attempts
-
-Admin-controlled Account Unlocking with special keys
-
-Session Management with secure logout
-
-🚢 Transport Management
-Multi-type Transport Support (Air & Sea)
-
-Real-time Availability tracking
-
-Capacity & Speed Management
-
-Add/Remove Transport functionality
-
-Transport Status Monitoring
-
-📅 Booking System
-Easy Transport Booking for passengers
-
-Booking History tracking
-
-Cancel Booking functionality
-
-Booking Status management (Confirmed/Cancelled/Completed)
-
-👥 User Management
-User Role Management by admin
-
-Failed Login Attempt tracking
-
-Account Lock/Unlock system
-
-User Activity Monitoring
-
-🏗️ System Architecture
-text
-TransportationManagementSystem/
-├── src/
-│   ├── models/          # Data Models
-│   │   ├── User.java
-│   │   ├── Transport.java
-│   │   ├── AirTransport.java
-│   │   ├── SeaTransport.java
-│   │   ├── Booking.java
-│   │   └── UserLock.java
-│   ├── services/        # Business Logic
-│   │   ├── AuthService.java
-│   │   ├── TransportService.java
-│   │   ├── BookingService.java
-│   │   └── UserLockService.java
-│   └── Main.java        # Application Entry Point
 🛠️ Installation
 Prerequisites
 Java JDK 8 or higher
 
 Any Java-compatible IDE (Eclipse, IntelliJ, VS Code)
 
-Step-by-Step Setup
-Clone the Repository
+Basic knowledge of command line operations
 
+Step-by-Step Installation Guide
+1. Create Project Structure
 bash
-git clone https://github.com/yourusername/transportation-management-system.git
-cd transportation-management-system
-Create Project Structure
+# Create main project directory
+mkdir TransportationManagementSystem
+cd TransportationManagementSystem
 
-bash
+# Create source folder structure
 mkdir -p src/models src/services
-Copy Source Files
 
-Copy all .java files to their respective directories
-
-Ensure the package structure is maintained
-
-Compile the Project
-
-bash
+# Navigate to source directory
 cd src
-javac -d . *.java models/*.java services/*.java
-Run the Application
+2. File Structure Setup
+Create the following folder structure and add corresponding Java files:
 
-bash
-java Main
-🎮 Usage
-Starting the Application
-bash
-java Main
-Default Login Credentials
-Role	Username	Password	Access Level
-👨‍💼 Admin	admin	admin123	Full system access
-👷 Operator	operator	op123	Transport & booking management
-👤 Passenger	john	pass123	Personal booking management
-Demo User Accounts for Testing
-Admin: Full system control
-
-Operator: Try wrong password 3 times to test lock feature
-
-Passenger: Book transports and manage personal bookings
-
-👥 User Roles & Permissions
-🎯 Admin
-✅ View all transports and bookings
-
-✅ Add/Remove transports
-
-✅ Manage user accounts
-
-✅ Unlock locked accounts
-
-✅ View system statistics
-
-✅ Access all system features
-
-🔧 Operator
-✅ View available transports
-
-✅ Manage bookings
-
-✅ Check transport status
-
-❌ Cannot manage users
-
-❌ Cannot unlock accounts
-
-👤 Passenger
-✅ View available transports
-
-✅ Book transports
-
-✅ View personal bookings
-
-✅ Cancel own bookings
-
-❌ Cannot manage system
-
-🔒 Security Features
-Account Locking System
-java
-// After 3 failed login attempts
-if (user.getFailedLoginAttempts() >= 3) {
-    lockService.lockUser(username, "SYSTEM");
-    System.out.println("🚫 Account locked!");
-}
-Special Unlock Keys
-Auto-generated unique unlock keys
-
-Admin can unlock with keys or force unlock
-
-Secure account recovery system
-
-📊 Class Diagram
 text
-User ──────┐
-           ├── AuthService
-UserLock ──┘
-                   │
-Transport ───────┐ │
-    ├──────────┐ ├── TransportService
-AirTransport  │ │
-SeaTransport ─┘ │
-                ├── BookingService
-Booking ────────┘
-Core Classes Overview
-User: Manages user credentials and roles
-
-Transport: Abstract base class for all transports
-
-AirTransport: Specialized air transport functionality
-
-SeaTransport: Specialized sea transport functionality
-
-Booking: Manages transport bookings
-
-UserLock: Handles account locking mechanism
-
-🔄 API Reference
-AuthService Methods
-java
-boolean login(String username, String password)
-boolean register(String username, String password, String email, String role)
-void logout()
-boolean isLoggedIn()
-TransportService Methods
-java
-void addTransport(Transport transport)
-boolean removeTransport(String id)
-List<Transport> getAvailableTransports()
-List<Transport> getTransportsByType(String type)
-BookingService Methods
-java
-Booking createBooking(String username, String transportId)
-boolean cancelBooking(String bookingId)
-List<Booking> getUserBookings(String username)
-🧪 Testing the System
-Testing Account Lock Feature
-Login as operator with wrong password 3 times
-
-Account will be automatically locked
-
-Login as admin and unlock the account
-
-Use the generated unlock key or force unlock
-
-Sample Test Flow
+TransportationManagementSystem/
+├── src/
+│   ├── models/
+│   │   ├── User.java
+│   │   ├── Transport.java
+│   │   ├── AirTransport.java
+│   │   ├── SeaTransport.java
+│   │   ├── Booking.java
+│   │   └── UserLock.java
+│   ├── services/
+│   │   ├── AuthService.java
+│   │   ├── TransportService.java
+│   │   ├── BookingService.java
+│   │   └── UserLockService.java
+│   └── Main.java
+3. Compile the Project
 bash
-# 1. Login as admin
-Username: admin
-Password: admin123
+# From src directory, compile all Java files
+javac -d . *.java models/*.java services/*.java
+4. Run the Application
+bash
+# Run the main class
+java Main
+5. Verify Installation
+If successful, you should see:
 
-# 2. Add new transport
-Transport Type: AIR
-Name: Boeing 747
-Capacity: 300
-Speed: 900
-Airline: Test Airlines
+text
+🚀 Starting Transportation Management System...
+🚀 Welcome to Transportation Management System 🚀
+Quick Installation (One Command)
+bash
+mkdir -p TransportationManagementSystem/src/{models,services} && cd TransportationManagementSystem/src
+# Then add all Java files and run: javac -d . *.java models/*.java services/*.java && java Main
+✨ Features
+🔐 Authentication & Security System
+Multi-role Login System - Admin, Operator, and Passenger roles
 
-# 3. Login as passenger and book transport
-Username: john
-Password: pass123
-🚀 Future Enhancements
-Database integration for persistent storage
+User Registration - New user account creation with role assignment
 
-Web-based GUI interface
+Secure Session Management - Automatic logout and session handling
 
-Email notifications for bookings
+Account Lock Protection - Automatic lock after 3 failed login attempts
 
-Payment integration
+Admin Unlock System - Special key-based account unlocking
 
-Mobile application
+Role-based Permissions - Different access levels for different user types
 
-Real-time transport tracking
+🚢 Transport Management
+Multiple Transport Types - Support for Air and Sea transports
 
-Advanced reporting system
+Dynamic Transport Addition - Add new transports with unique IDs
 
-🤝 Contributing
-We welcome contributions! Please follow these steps:
+Transport Removal - Delete transports from the system
 
-Fork the project
+Real-time Availability - Live tracking of transport availability status
 
-Create your feature branch (git checkout -b feature/AmazingFeature)
+Capacity Management - Set and manage passenger capacity for each transport
 
-Commit your changes (git commit -m 'Add some AmazingFeature')
+Speed Configuration - Configure speed settings for different transport types
 
-Push to the branch (git push origin feature/AmazingFeature)
+Transport Categorization - Filter and view transports by type (AIR/SEA)
 
-Open a Pull Request
+📅 Advanced Booking System
+Easy Booking Process - Simple transport booking for passengers
 
-Development Guidelines
-Follow Java coding conventions
+Booking History - Complete history of all bookings
 
-Write meaningful commit messages
+Booking Cancellation - Cancel confirmed bookings
 
-Add comments for complex logic
+Status Tracking - Track booking status (CONFIRMED/CANCELLED/COMPLETED)
 
-Test all features before submitting
+Personal Booking Management - Users can view and manage their own bookings
 
-📝 License
-This project is licensed under the MIT License - see the LICENSE file for details.
+Automatic Availability Update - Transport availability automatically updates on booking
 
-👨‍💻 Authors
-Your Name - Initial work - YourGitHub
+👥 Comprehensive User Management
+User Role Management - Admin can view all users and their roles
 
-🙏 Acknowledgments
-Java Platform for robust backend
+Failed Login Tracking - Monitor and track failed login attempts
 
-OOP principles for clean architecture
+Account Status Monitoring - View active and locked accounts
 
-All contributors who helped shape this project
+User Activity Logging - Track user activities within the system
 
-<div align="center">
-⭐ Don't forget to star this repository if you find it helpful!
-Happy Coding! 🚀
+Profile Management - Users can manage their own profiles
 
-</div>
-📞 Support
-If you have any questions or need help with setup:
+🎯 Role-Based Dashboard System
+👨‍💼 Admin Dashboard Features
+Full system access and control
 
-Create an Issue
+View all transports and bookings
 
-Email: your.email@domain.com
+Add and remove transports
+
+Manage user accounts and roles
+
+Unlock locked user accounts
+
+View comprehensive system statistics
+
+Monitor system health and usage
+
+👷 Operator Dashboard Features
+Transport management capabilities
+
+View available transports
+
+Manage booking operations
+
+Check transport status and availability
+
+Limited access to user management
+
+👤 Passenger Dashboard Features
+Personal booking management
+
+View available transports
+
+Book available transports
+
+View personal booking history
+
+Cancel own bookings
+
+Limited to personal activities
+
+🔒 Security & Protection Features
+Automatic Account Lock - System locks accounts after 3 failed attempts
+
+Unique Unlock Keys - Auto-generated secure unlock keys
+
+Force Unlock Capability - Admin can force unlock any account
+
+Input Validation - Basic validation for user inputs
+
+Error Handling - Comprehensive error handling throughout the system
+
+📊 System Monitoring & Reporting
+Real-time Statistics - Live system statistics and metrics
+
+Transport Analytics - View transport counts by type
+
+Booking Analytics - Track confirmed vs cancelled bookings
+
+User Activity Reports - Monitor user engagement and activities
+
+System Health Monitoring - Track overall system performance
