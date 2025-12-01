@@ -30,7 +30,7 @@ public class UserLockService {
     public boolean unlockWithAdminPower(String username) {
         UserLock lock = lockedUsers.get(username);
         if (lock != null) {
-            lock.Unlock();
+            lock.unlock();
             lockedUsers.remove(username);
             return true;
         }
