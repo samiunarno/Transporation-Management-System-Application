@@ -1,0 +1,3 @@
+admin,admin123,admin@transport.com,ADMIN
+operator,op123,operator@transport.com,OPERATOR
+john,pass123,john@email.com,PASSENGER

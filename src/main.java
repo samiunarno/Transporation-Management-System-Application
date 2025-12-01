@@ -1,4 +1,5 @@
 import services.*;
+import interfaces.*;
 import models.*;
 import java.util.*;
 
@@ -6,10 +7,10 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Starting Transportation Management System...");
         
-        AuthService authService = new AuthService();
-        TransportService transportService = new TransportService();
-        BookingService bookingService = new BookingService(transportService);
-        UserLockService lockService = authService.getLockService();
+        IUserLockService lockService = new UserLockService();
+        IAuthService authService = new AuthService();
+        ITransportService transportService = new TransportService();
+        IBookingService bookingService = new BookingService((TransportService) transportService);
         
         TransportationSystem system = new TransportationSystem(
             authService, transportService, bookingService, lockService);
@@ -19,14 +20,14 @@ public class Main {
 }
 
 class TransportationSystem {
-    private AuthService authService;
-    private TransportService transportService;
-    private BookingService bookingService;
-    private UserLockService lockService;
+    private IAuthService authService;
+    private ITransportService transportService;
+    private IBookingService bookingService;
+    private IUserLockService lockService;
     private Scanner scanner;
     
-    public TransportationSystem(AuthService authService, TransportService transportService,
-                              BookingService bookingService, UserLockService lockService) {
+    public TransportationSystem(IAuthService authService, ITransportService transportService,
+                              IBookingService bookingService, IUserLockService lockService) {
         this.authService = authService;
         this.transportService = transportService;
         this.bookingService = bookingService;
@@ -35,7 +36,7 @@ class TransportationSystem {
     }
     
     public void start() {
-        System.out.println("Welcome to Transportation Management System ");
+        System.out.println("Welcome to Transportation Management System");
         
         while (true) {
             if (!authService.isLoggedIn()) {
@@ -47,9 +48,9 @@ class TransportationSystem {
     }
     
     private void showLoginMenu() {
-        System.out.println("\n" + "=".repeat(50));
+        System.out.println("\n==================================================");
         System.out.println("MAIN MENU");
-        System.out.println("=".repeat(50));
+        System.out.println("==================================================");
         System.out.println("1. Login");
         System.out.println("2. Register");
         System.out.println("3. Exit");
@@ -110,9 +111,9 @@ class TransportationSystem {
         User currentUser = authService.getCurrentUser();
         String role = currentUser.getRole();
         
-        System.out.println("\n" + "=".repeat(60));
-        System.out.printf("DASHBOARD - Welcome, %s (%s)%n", currentUser.getUsername(), role);
-        System.out.println("=".repeat(60));
+        System.out.println("\n============================================================");
+        System.out.println("DASHBOARD - Welcome, " + currentUser.getUsername() + " (" + role + ")");
+        System.out.println("============================================================");
         
         switch (role) {
             case "ADMIN":
@@ -241,7 +242,7 @@ class TransportationSystem {
     
     private void displayAllTransports() {
         System.out.println("\nALL TRANSPORTS");
-        List<Transport> transports = transportService.getAvailableTransports();
+        List<Transport> transports = transportService.getAllTransports();
         if (transports.isEmpty()) {
             System.out.println("No transports available.");
         } else {
@@ -294,7 +295,7 @@ class TransportationSystem {
         }
         
         transportService.addTransport(transport);
-        System.out.printf("Transport %s added successfully!%n", id);
+        System.out.println("Transport " + id + " added successfully!");
     }
     
     private void removeTransport() {
@@ -320,7 +321,7 @@ class TransportationSystem {
         Booking booking = bookingService.createBooking(username, transportId);
         
         if (booking != null) {
-            System.out.printf("Booking successful! Booking ID: %s%n", booking.getBookingId());
+            System.out.println("Booking successful! Booking ID: " + booking.getBookingId());
         } else {
             System.out.println("Booking failed! Transport not available.");
         }
@@ -386,37 +387,45 @@ class TransportationSystem {
     
     private void displayTransportStatus() {
         System.out.println("\nTRANSPORT STATUS");
-        List<Transport> allTransports = transportService.getAvailableTransports();
+        List<Transport> allTransports = transportService.getAllTransports();
         long available = allTransports.stream().filter(Transport::isAvailable).count();
         long busy = allTransports.size() - available;
         
-        System.out.printf("Total Transports: %d%n", allTransports.size());
-        System.out.printf("Available: %d%n", available);
-        System.out.printf("Busy: %d%n", busy);
+        System.out.println("Total Transports: " + allTransports.size());
+        System.out.println("Available: " + available);
+        System.out.println("Busy: " + busy);
     }
     
     private void showStatistics() {
         System.out.println("\nSYSTEM STATISTICS");
-        List<Transport> transports = transportService.getAvailableTransports();
-        List<Booking> bookings = bookingService.getAllBookings();
         
-        long airTransports = transports.stream()
-            .filter(t -> t.getType().equals("AIR")).count();
-        long seaTransports = transports.stream()
-            .filter(t -> t.getType().equals("SEA")).count();
+        int totalTransports = transportService.getTotalTransports();
+        int availableTransports = transportService.getAvailableCount();
         
-        long confirmedBookings = bookings.stream()
-            .filter(b -> b.getStatus().equals("CONFIRMED")).count();
-        long cancelledBookings = bookings.stream()
-            .filter(b -> b.getStatus().equals("CANCELLED")).count();
+        System.out.println("Transport Statistics:");
+        System.out.println("  - Total Transports: " + totalTransports);
+        System.out.println("  - Available: " + availableTransports);
+        System.out.println("  - In Use: " + (totalTransports - availableTransports));
         
-        System.out.printf("Total Transports: %d%n", transports.size());
-        System.out.printf("  - Air Transports: %d%n", airTransports);
-        System.out.printf("  - Sea Transports: %d%n", seaTransports);
-        System.out.printf("Total Bookings: %d%n", bookings.size());
-        System.out.printf("  - Confirmed: %d%n", confirmedBookings);
-        System.out.printf("  - Cancelled: %d%n", cancelledBookings);
-        System.out.printf("Locked Accounts: %d%n", lockService.getAllLockedUsers().size());
+        int totalBookings = bookingService.getTotalBookings();
+        int confirmedBookings = bookingService.getConfirmedBookings();
+        int cancelledBookings = bookingService.getCancelledBookings();
+        int completedBookings = bookingService.getCompletedBookings();
+        
+        System.out.println("Booking Statistics:");
+        System.out.println("  - Total Bookings: " + totalBookings);
+        System.out.println("  - Confirmed: " + confirmedBookings);
+        System.out.println("  - Cancelled: " + cancelledBookings);
+        System.out.println("  - Completed: " + completedBookings);
+        
+        int lockedUsers = lockService.getLockedUsersCount();
+        System.out.println("User Statistics:");
+        System.out.println("  - Locked Accounts: " + lockedUsers);
+        
+        if (totalBookings > 0) {
+            double successRate = bookingService.getBookingSuccessRate();
+            System.out.println("Booking Success Rate: " + String.format("%.2f", successRate) + "%");
+        }
     }
     
     private void manageLockedAccounts() {
@@ -430,36 +439,72 @@ class TransportationSystem {
         
         System.out.println("Locked Accounts:");
         for (UserLock lock : lockedUsers) {
-            System.out.printf("User: %s | Locked By: %s | Key: %s%n",
-                             lock.getUsername(), lock.getLockedBy(), lock.getUnlockKey());
+            System.out.println("User: " + lock.getUsername() + " | Locked By: " + lock.getLockedBy() + " | Key: " + lock.getUnlockKey());
         }
         
         System.out.println("\n1. Unlock with Key");
         System.out.println("2. Force Unlock (Admin Power)");
-        System.out.println("3. Back");
+        System.out.println("3. Display Lock Details");
+        System.out.println("4. Back");
         System.out.print("Choose option: ");
         
         int choice = getIntInput();
-        if (choice == 1) {
-            System.out.print("Enter username to unlock: ");
-            String username = scanner.nextLine();
-            System.out.print("Enter unlock key: ");
-            String key = scanner.nextLine();
-            
-            if (lockService.lockUser(username, key)) {
-                System.out.println("Account unlocked successfully!");
-            } else {
-                System.out.println("Unlock failed! Invalid key or username.");
-            }
-        } else if (choice == 2) {
-            System.out.print("Enter username to force unlock: ");
-            String username = scanner.nextLine();
-            
-            if (lockService.unlockWithAdminPower(username)) {
-                System.out.println("Account force unlocked successfully!");
-            } else {
-                System.out.println("User not found or not locked!");
-            }
+        
+        switch (choice) {
+            case 1:
+                unlockWithKey();
+                break;
+            case 2:
+                forceUnlock();
+                break;
+            case 3:
+                displayLockDetails();
+                break;
+            case 4:
+                return;
+            default:
+                System.out.println("Invalid option!");
+        }
+    }
+    
+    private void unlockWithKey() {
+        System.out.print("Enter username to unlock: ");
+        String username = scanner.nextLine();
+        System.out.print("Enter unlock key: ");
+        String key = scanner.nextLine();
+        
+        if (lockService.unlockUser(username, key)) {
+            System.out.println("Account unlocked successfully!");
+        } else {
+            System.out.println("Unlock failed! Invalid key or username.");
+        }
+    }
+    
+    private void forceUnlock() {
+        System.out.print("Enter username to force unlock: ");
+        String username = scanner.nextLine();
+        
+        if (lockService.unlockWithAdminPower(username)) {
+            System.out.println("Account force unlocked successfully!");
+        } else {
+            System.out.println("User not found or not locked!");
+        }
+    }
+    
+    private void displayLockDetails() {
+        System.out.print("Enter username to view lock details: ");
+        String username = scanner.nextLine();
+        
+        UserLock lock = lockService.getLockInfo(username);
+        if (lock != null) {
+            System.out.println("\nLOCK DETAILS:");
+            System.out.println("Username: " + lock.getUsername());
+            System.out.println("Locked By: " + lock.getLockedBy());
+            System.out.println("Locked At: " + lock.getLockedAt());
+            System.out.println("Unlock Key: " + lock.getUnlockKey());
+            System.out.println("Duration: " + lock.getLockDuration());
+        } else {
+            System.out.println("User not locked!");
         }
     }
     
@@ -471,10 +516,11 @@ class TransportationSystem {
             System.out.println("No users found.");
         } else {
             for (User user : users.values()) {
-                String lockStatus = lockService.isUserLocked(user.getUsername()) ? "" : "";
-                System.out.printf("%s %s (Role: %s, Failed Attempts: %d)%n",
-                                lockStatus, user.getUsername(), user.getRole(), 
-                                user.getFailedLoginAttempts());
+                String lockStatus = lockService.isUserLocked(user.getUsername()) ? "[LOCKED]" : "[ACTIVE]";
+                String activeStatus = user.isActive() ? "Active" : "Inactive";
+                System.out.println(lockStatus + " " + user.getUsername() + 
+                    " (Role: " + user.getRole() + ", Status: " + activeStatus + 
+                    ", Failed Attempts: " + user.getFailedLoginAttempts() + ")");
             }
         }
     }
