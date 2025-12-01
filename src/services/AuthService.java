@@ -17,7 +17,7 @@ public class AuthService implements IAuthService {
     }
 
     private void loadUsersFromFile() {
-        File file = new File(USER_FILE);
+        File file = new File("/data/users.txt");
         if (!file.exists()) {
             initializeDefaultUsers();
             saveUsersToFile();

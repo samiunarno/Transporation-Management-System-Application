@@ -23,7 +23,7 @@ public class User implements IUser, Serializable {
         this.failedLoginAttempts = 0;
     }
     
-    // ========== IUser Interface Methods ==========
+
     
     @Override
     public String getUsername() {

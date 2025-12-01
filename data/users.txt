@@ -1,4 +1,4 @@
 admin,admin123,admin@transport.com,ADMIN
 john,pass123,john@email.com,PASSENGER
-Samiunmahmud,123456,samiunarnouk@gmail.com,PASSENGER
 operator,op123,operator@transport.com,OPERATOR
+arno,123456,samiunarno@gmail.com,PASSENGER
