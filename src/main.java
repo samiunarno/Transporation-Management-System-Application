@@ -92,7 +92,7 @@ class TransportationSystem {
         String password = scanner.nextLine();
         System.out.print("Email: ");
         String email = scanner.nextLine();
-        System.out.print("Role (ADMIN/OPERATOR/PASSENGER): ");
+        System.out.print("Role (OPERATOR/PASSENGER): ");
         String role = scanner.nextLine().toUpperCase();
         
         if (!role.equals("ADMIN") && !role.equals("OPERATOR") && !role.equals("PASSENGER")) {

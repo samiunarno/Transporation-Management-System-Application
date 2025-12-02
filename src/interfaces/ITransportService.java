@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface ITransportService {
-
     void addTransport(Transport transport);
     boolean removeTransport(String id);
     Transport findTransport(String id);

@@ -22,9 +22,6 @@ public class User implements IUser, Serializable {
         this.isActive = true;
         this.failedLoginAttempts = 0;
     }
-    
-
-    
     @Override
     public String getUsername() {
         return username;
@@ -59,9 +56,6 @@ public class User implements IUser, Serializable {
     public void resetFailedAttempts() {
         this.failedLoginAttempts = 0;
     }
-    
-    // ========== Additional Methods ==========
-    
     public String getPassword() {
         return password;
     }
@@ -96,7 +90,7 @@ public class User implements IUser, Serializable {
     
     public void updateRole(String newRole) {
         this.role = newRole;
-        System.out.println("👤 User " + username + " role updated to " + newRole);
+        System.out.println("User " + username + " role updated to " + newRole);
     }
     
     @Override

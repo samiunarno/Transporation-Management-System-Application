@@ -19,7 +19,7 @@ public class Booking implements IBookable {
         this.status = "CONFIRMED";
     }
     
-    // ========== IBookable Interface Methods ==========
+
     
     @Override
     public String getStatus() {
@@ -40,9 +40,6 @@ public class Booking implements IBookable {
     public boolean isConfirmed() {
         return status.equals("CONFIRMED");
     }
-    
-    // ========== Additional Methods ==========
-    
     public String getBookingId() {
         return bookingId;
     }

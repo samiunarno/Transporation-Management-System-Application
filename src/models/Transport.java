@@ -64,6 +64,6 @@ public abstract class Transport implements ITransport {
     @Override
     public String toString() {
         return String.format("%s [ID: %s, Capacity: %d, Speed: %.1f km/h, Available: %s]",
-                           name, id, capacity, speed, isAvailable ? "✅" : "❌");
+                           name, id, capacity, speed, isAvailable ? "!" : "?");
     }
 }

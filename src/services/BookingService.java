@@ -19,7 +19,7 @@ public class BookingService implements IBookingService {
     @Override
     public Booking createBooking(String username, String transportId) {
         if (!validateBooking(username, transportId)) {
-            System.out.println("❌ Booking validation failed!");
+            System.out.println(" Booking validation failed!");
             return null;
         }
 
@@ -30,7 +30,7 @@ public class BookingService implements IBookingService {
         bookings.put(booking.getBookingId(), booking);
         
         bookingLog.add("Booking created: " + booking.getBookingId() + " by " + username);
-        System.out.println("✅ Booking created: " + booking.getBookingId());
+        System.out.println("Booking created: " + booking.getBookingId());
         return booking;
     }
 
@@ -39,12 +39,12 @@ public class BookingService implements IBookingService {
         Booking booking = bookings.get(bookingId);
         
         if (booking == null) {
-            System.out.println("❌ Booking not found!");
+            System.out.println("Booking not found!");
             return false;
         }
         
         if (!canCancelBooking(bookingId)) {
-            System.out.println("❌ Cannot cancel this booking!");
+            System.out.println("Cannot cancel this booking!");
             return false;
         }
 
@@ -55,7 +55,7 @@ public class BookingService implements IBookingService {
         }
         
         bookingLog.add("Booking cancelled: " + bookingId);
-        System.out.println("✅ Booking cancelled: " + bookingId);
+        System.out.println("Booking cancelled: " + bookingId);
         return true;
     }
 
@@ -63,7 +63,7 @@ public class BookingService implements IBookingService {
     public boolean confirmBooking(String bookingId) {
         Booking booking = bookings.get(bookingId);
         if (booking != null && booking.getStatus().equals("CONFIRMED")) {
-            System.out.println("✅ Booking already confirmed: " + bookingId);
+            System.out.println("Booking already confirmed: " + bookingId);
             return true;
         }
         return false;
@@ -75,7 +75,7 @@ public class BookingService implements IBookingService {
         if (booking != null && booking.getStatus().equals("CONFIRMED")) {
             booking.complete();
             bookingLog.add("Booking completed: " + bookingId);
-            System.out.println("✅ Booking completed: " + bookingId);
+            System.out.println("Booking completed: " + bookingId);
             return true;
         }
         return false;
@@ -87,7 +87,7 @@ public class BookingService implements IBookingService {
         if (booking != null && canRescheduleBooking(bookingId)) {
             booking.reschedule();
             bookingLog.add("Booking rescheduled: " + bookingId);
-            System.out.println("✅ Booking rescheduled: " + bookingId);
+            System.out.println("Booking rescheduled: " + bookingId);
             return true;
         }
         return false;
@@ -97,7 +97,7 @@ public class BookingService implements IBookingService {
     public Booking findBookingById(String bookingId) {
         Booking booking = bookings.get(bookingId);
         if (booking == null) {
-            System.out.println("❌ Booking not found: " + bookingId);
+            System.out.println("Booking not found: " + bookingId);
         }
         return booking;
     }
@@ -208,7 +208,7 @@ public class BookingService implements IBookingService {
     @Override
     public String generateBookingReport() {
         StringBuilder report = new StringBuilder();
-        report.append("📊 BOOKING REPORT\n");
+        report.append("BOOKING REPORT\n");
         report.append("=".repeat(40)).append("\n");
         report.append("Total Bookings: ").append(getTotalBookings()).append("\n");
         report.append("Confirmed: ").append(getConfirmedBookings()).append("\n");
@@ -234,10 +234,9 @@ public class BookingService implements IBookingService {
     public boolean canRescheduleBooking(String bookingId) {
         return canCancelBooking(bookingId);
     }
-
-    // Additional helper method
+    
     public void displayAllBookings() {
-        System.out.println("\n📋 ALL BOOKINGS (" + bookings.size() + " total):");
+        System.out.println("\nALL BOOKINGS (" + bookings.size() + " total):");
         System.out.println("=".repeat(60));
         if (bookings.isEmpty()) {
             System.out.println("No bookings found.");

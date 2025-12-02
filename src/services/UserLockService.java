@@ -20,11 +20,11 @@ public class UserLockService implements IUserLockService {
             lockedUsers.put(username, lock);
             
             lockHistory.add("User locked: " + username + " by " + lockedBy + " at " + new Date());
-            System.out.println("🔒 User locked: " + username);
-            System.out.println("🔑 Unlock Key: " + lock.getUnlockKey());
+            System.out.println("User locked: " + username);
+            System.out.println("Unlock Key: " + lock.getUnlockKey());
             return true;
         }
-        System.out.println("⚠️ User already locked: " + username);
+        System.out.println("User already locked: " + username);
         return false;
     }
 
@@ -36,10 +36,10 @@ public class UserLockService implements IUserLockService {
             lockedUsers.remove(username);
             
             lockHistory.add("User unlocked (key): " + username + " at " + new Date());
-            System.out.println("🔓 User unlocked: " + username);
+            System.out.println("User unlocked: " + username);
             return true;
         }
-        System.out.println("❌ Invalid unlock key or user not found!");
+        System.out.println("Invalid unlock key or user not found!");
         return false;
     }
 
@@ -51,10 +51,10 @@ public class UserLockService implements IUserLockService {
             lockedUsers.remove(username);
             
             lockHistory.add("User unlocked (admin): " + username + " at " + new Date());
-            System.out.println("🔓 User unlocked by admin: " + username);
+            System.out.println("User unlocked by admin: " + username);
             return true;
         }
-        System.out.println("❌ User not locked: " + username);
+        System.out.println("User not locked: " + username);
         return false;
     }
 
@@ -69,7 +69,7 @@ public class UserLockService implements IUserLockService {
         lockedUsers.clear();
         lockHistory.add("All users force unlocked at " + new Date());
         
-        System.out.println("🚀 Force unlocked all " + count + " users!");
+        System.out.println("Force unlocked all " + count + " users!");
         return true;
     }
 
@@ -82,7 +82,7 @@ public class UserLockService implements IUserLockService {
     public UserLock getLockInfo(String username) {
         UserLock lock = lockedUsers.get(username);
         if (lock == null) {
-            System.out.println("ℹ️ No lock info for: " + username);
+            System.out.println("No lock info for: " + username);
         }
         return lock;
     }
@@ -118,7 +118,7 @@ public class UserLockService implements IUserLockService {
     public boolean removeLock(String username) {
         if (lockedUsers.remove(username) != null) {
             lockHistory.add("Lock removed: " + username + " at " + new Date());
-            System.out.println("🗑️ Lock removed: " + username);
+            System.out.println("Lock removed: " + username);
             return true;
         }
         return false;
@@ -149,7 +149,7 @@ public class UserLockService implements IUserLockService {
         }
         
         if (unlockedCount > 0) {
-            System.out.println("🔄 Auto-unlocked " + unlockedCount + " expired locks!");
+            System.out.println("Auto-unlocked " + unlockedCount + " expired locks!");
         }
         
         return unlockedCount;
@@ -163,7 +163,7 @@ public class UserLockService implements IUserLockService {
     @Override
     public void clearLockHistory() {
         lockHistory.clear();
-        System.out.println("📋 Lock history cleared!");
+        System.out.println("Lock history cleared!");
     }
 
     @Override
@@ -194,7 +194,7 @@ public class UserLockService implements IUserLockService {
 
     @Override
     public void displayLockedUsers() {
-        System.out.println("\n🔒 LOCKED USERS (" + lockedUsers.size() + " users):");
+        System.out.println("\nLOCKED USERS (" + lockedUsers.size() + " users):");
         System.out.println("=".repeat(50));
         
         if (lockedUsers.isEmpty()) {
@@ -212,21 +212,21 @@ public class UserLockService implements IUserLockService {
     public void displayLockDetails(String username) {
         UserLock lock = lockedUsers.get(username);
         if (lock != null) {
-            System.out.println("\n🔒 LOCK DETAILS for " + username + ":");
+            System.out.println("\nLOCK DETAILS for " + username + ":");
             System.out.println("=".repeat(40));
             System.out.println("Locked By: " + lock.getLockedBy());
             System.out.println("Locked At: " + lock.getLockedAt());
             System.out.println("Unlock Key: " + lock.getUnlockKey());
             System.out.println("Duration: " + lock.getLockDuration());
         } else {
-            System.out.println("❌ User not locked: " + username);
+            System.out.println("User not locked: " + username);
         }
     }
 
     @Override
     public String generateLockReport() {
         StringBuilder report = new StringBuilder();
-        report.append("🔒 LOCK REPORT\n");
+        report.append("LOCK REPORT\n");
         report.append("=".repeat(40)).append("\n");
         report.append("Total Locked Users: ").append(getLockedUsersCount()).append("\n");
         report.append("Lock History Entries: ").append(lockHistory.size()).append("\n");

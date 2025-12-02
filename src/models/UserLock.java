@@ -45,7 +45,7 @@ public class UserLock implements Serializable {
     
     public void unlock() {
         this.isLocked = false;
-        System.out.println("🔓 Account " + username + " has been unlocked");
+        System.out.println("Account " + username + " has been unlocked");
     }
     
     public boolean isValidKey(String key) {

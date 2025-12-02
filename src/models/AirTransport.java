@@ -25,11 +25,8 @@ public class AirTransport extends Transport implements IFlyable, ITransport {
     public void displayInfo() {
         System.out.printf("%s - Airline: %s | Altitude: %.1f ft | Status: %s | %s%n",
                          name, airline, altitude, flightStatus,
-                         isAvailable ? "Available" : "❌ Busy");
+                         isAvailable ? "Available" : "Busy");
     }
-    
-    // ========== IFlyable Interface Methods ==========
-    
     @Override
     public void takeOff() {
         System.out.printf("%s is taking off!%n", name);
@@ -55,7 +52,7 @@ public class AirTransport extends Transport implements IFlyable, ITransport {
         this.flightStatus = "CRUISING";
     }
     
-    // ========== Additional Methods ==========
+
     
     public String getAirline() { 
         return airline; 
