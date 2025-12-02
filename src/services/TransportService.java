@@ -21,14 +21,14 @@ public class TransportService implements ITransportService {
     private void initializeSampleData() {
         addTransport(new AirTransport("AIR001", "Boeing 777", 320, 900, "China Star Airways"));
         addTransport(new SeaTransport("SEA001", "Hai Long", 800, 40, "Shanghai Port"));
-        System.out.println("✅ Sample transports initialized");
+        System.out.println("Sample transports initialized");
     }
 
     @Override
     public void addTransport(Transport transport) {
         transports.put(transport.getId(), transport);
         operationLog.add("Added transport: " + transport.getId());
-        System.out.println("✅ Transport added: " + transport.getId());
+        System.out.println("Transport added: " + transport.getId());
     }
 
     @Override
@@ -36,10 +36,10 @@ public class TransportService implements ITransportService {
         Transport removed = transports.remove(id);
         if (removed != null) {
             operationLog.add("Removed transport: " + id);
-            System.out.println("✅ Transport removed: " + id);
+            System.out.println("Transport removed: " + id);
             return true;
         }
-        System.out.println("❌ Transport not found: " + id);
+        System.out.println(" Transport not found: " + id);
         return false;
     }
 
@@ -47,7 +47,7 @@ public class TransportService implements ITransportService {
     public Transport findTransport(String id) {
         Transport transport = transports.get(id);
         if (transport == null) {
-            System.out.println("⚠️ Transport not found: " + id);
+            System.out.println(" Transport not found: " + id);
         }
         return transport;
     }
@@ -57,10 +57,10 @@ public class TransportService implements ITransportService {
         if (transports.containsKey(id)) {
             transports.put(id, newTransport);
             operationLog.add("Updated transport: " + id);
-            System.out.println("✅ Transport updated: " + id);
+            System.out.println("Transport updated: " + id);
             return true;
         }
-        System.out.println("❌ Transport not found for update: " + id);
+        System.out.println("Transport not found for update: " + id);
         return false;
     }
 
@@ -115,7 +115,7 @@ public class TransportService implements ITransportService {
         if (transport != null) {
             transport.setAvailable(available);
             operationLog.add("Set availability: " + id + " = " + available);
-            System.out.println("✅ Transport " + id + " availability set to: " + available);
+            System.out.println("Transport " + id + " availability set to: " + available);
             return true;
         }
         return false;
@@ -145,7 +145,7 @@ public class TransportService implements ITransportService {
     public String generateId(String type) {
         String prefix = type.equalsIgnoreCase("AIR") ? "AIR" : "SEA";
         String id = String.format("%s%03d", prefix, transportCounter++);
-        System.out.println("🆔 Generated ID: " + id);
+        System.out.println("Generated ID: " + id);
         return id;
     }
 
@@ -156,7 +156,7 @@ public class TransportService implements ITransportService {
 
     @Override
     public void displayAllTransports() {
-        System.out.println("\n🚀 ALL TRANSPORTS (" + transports.size() + " total):");
+        System.out.println("\nALL TRANSPORTS (" + transports.size() + " total):");
         System.out.println("=".repeat(50));
         if (transports.isEmpty()) {
             System.out.println("No transports available.");
@@ -170,7 +170,7 @@ public class TransportService implements ITransportService {
     @Override
     public void displayAvailableTransports() {
         List<Transport> available = getAvailableTransports();
-        System.out.println("\n✅ AVAILABLE TRANSPORTS (" + available.size() + " available):");
+        System.out.println("\nAVAILABLE TRANSPORTS (" + available.size() + " available):");
         System.out.println("=".repeat(50));
         if (available.isEmpty()) {
             System.out.println("No available transports.");
@@ -185,18 +185,18 @@ public class TransportService implements ITransportService {
     public void displayTransportDetails(String id) {
         Transport transport = transports.get(id);
         if (transport != null) {
-            System.out.println("\n📋 TRANSPORT DETAILS:");
+            System.out.println("\nTRANSPORT DETAILS:");
             System.out.println("=".repeat(30));
             transport.displayInfo();
         } else {
-            System.out.println("❌ Transport not found: " + id);
+            System.out.println("Transport not found: " + id);
         }
     }
 
     // Additional helper method
     public void showStatistics() {
         Map<String, Integer> stats = getTransportStatistics();
-        System.out.println("\n📊 TRANSPORT STATISTICS:");
+        System.out.println("\nTRANSPORT STATISTICS:");
         System.out.println("=".repeat(30));
         for (Map.Entry<String, Integer> entry : stats.entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());

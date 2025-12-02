@@ -70,7 +70,7 @@ public class Booking implements IBookable {
     public void reschedule() {
         this.bookingTime = LocalDateTime.now();
         this.status = "RESCHEDULED";
-        System.out.println("📅 Booking " + bookingId + " has been rescheduled");
+        System.out.println("Booking " + bookingId + " has been rescheduled");
     }
     
     @Override

@@ -23,23 +23,23 @@ public class AirTransport extends Transport implements IFlyable, ITransport {
     
     @Override
     public void displayInfo() {
-        System.out.printf("✈️  %s - Airline: %s | Altitude: %.1f ft | Status: %s | %s%n",
+        System.out.printf("%s - Airline: %s | Altitude: %.1f ft | Status: %s | %s%n",
                          name, airline, altitude, flightStatus,
-                         isAvailable ? "✅ Available" : "❌ Busy");
+                         isAvailable ? "Available" : "❌ Busy");
     }
     
     // ========== IFlyable Interface Methods ==========
     
     @Override
     public void takeOff() {
-        System.out.printf("🛫 %s is taking off!%n", name);
+        System.out.printf("%s is taking off!%n", name);
         this.altitude = 35000;
         this.flightStatus = "IN_FLIGHT";
     }
     
     @Override
     public void land() {
-        System.out.printf("🛬 %s is landing!%n", name);
+        System.out.printf(" %s is landing!%n", name);
         this.altitude = 0;
         this.flightStatus = "LANDED";
     }
@@ -51,7 +51,7 @@ public class AirTransport extends Transport implements IFlyable, ITransport {
     
     @Override
     public void fly() {
-        System.out.printf("✈️ %s is flying at %.1f ft altitude%n", name, altitude);
+        System.out.printf(" %s is flying at %.1f ft altitude%n", name, altitude);
         this.flightStatus = "CRUISING";
     }
     
@@ -66,13 +66,13 @@ public class AirTransport extends Transport implements IFlyable, ITransport {
     }
     
     public void emergencyLand() {
-        System.out.printf("🚨 %s making emergency landing!%n", name);
+        System.out.printf("%s making emergency landing!%n", name);
         this.altitude = 0;
         this.flightStatus = "EMERGENCY_LANDED";
     }
     
     public void increaseAltitude(double feet) {
         this.altitude += feet;
-        System.out.printf("⬆️ %s climbed to %.1f ft%n", name, altitude);
+        System.out.printf("%s climbed to %.1f ft%n", name, altitude);
     }
 }
