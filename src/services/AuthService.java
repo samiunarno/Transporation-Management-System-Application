@@ -66,7 +66,14 @@ public class AuthService implements IAuthService {
         users.put("admin", new User("admin", "admin123", "admin@transport.com", "ADMIN"));
         users.put("operator", new User("operator", "op123", "operator@transport.com", "OPERATOR"));
         users.put("john", new User("john", "pass123", "john@email.com", "PASSENGER"));
+        users.put("samiun", new User("samiun", "sam123", "sm@gmail.com", "PASSENGER"));
+
+        System.out.print(users);
+
+
     }
+
+    
 
     @Override
     public boolean register(String username, String password, String email, String role) {
